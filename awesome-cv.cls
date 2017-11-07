@@ -709,15 +709,15 @@
 \RequirePackage[ % BibLaTeX
 	sorting=ydnt, % Sorts entries by year (descending order), name, title
 	style=numeric,
-%	doi=false,
-%	isbn=true,
-%	url=false,
-%	eprint=false,
-%	backref = false, % include back references in bibliography
-%	maxcitenames=3, % affects only the citations in the document body
-%	maxbibnames=99, % affects only the bibliography, pass 99 to print all
-%	hyperref=true,
-%	block=none,
+	doi=false,
+	isbn=true,
+	url=false,
+	eprint=false,
+	backref = false, % include back references in bibliography
+	maxcitenames=3, % affects only the citations in the document body
+	maxbibnames=99, % affects only the bibliography, pass 99 to print all
+	hyperref=true,
+	block=none,
 	defernumbers=true,
 	backend=biber % {Options: bibtex, biber}
 	]{biblatex}
@@ -738,46 +738,48 @@
 %\DeclareFieldFormat[incollection]{title}{#1\par}
 %\DeclareFieldFormat[phdthesis]{title}{#1\par}
 
-%\DeclareBibliographyDriver{article}{%
-%  \fontsize{9pt}{1em}\bodyfont%
-%  \printfield{title}%
-%  \newblock%
-%  \printnames{author}%
-%  \par%
-%  \newblock%
-%  {%
-%    \fontsize{8pt}{1em}\bodyfontlight\color{graytext}%
-%    \usebibmacro{journal+issuetitle}%
-%    \setunit{\space}%
-%    \printfield{pages}%
-%    \newunit%
-%    \printlist{publisher}%
-%    \setunit*{\addcomma\space}%
-%    \printfield{year}%
-%    \newunit%
-%  }
-%  \par\vspace{0.3\baselineskip}
-%}
-%
-%\DeclareBibliographyDriver{inproceedings}{%
-%  \fontsize{9pt}{1em}\bodyfont%
-%  \printfield{title}%
-%  \newblock%
-%  \printnames{author}%
-%  \par%
-%  \newblock%
-%  {%
-%    \fontsize{8pt}{1em}\bodyfontlight\color{graytext}%
-%    \printfield{booktitle}%
-%    \setunit{\addcomma\space}%
-%    \printfield{year}%
+\DeclareBibliographyDriver{article}{%
+  \fontsize{9pt}{1em}\bodyfont%
+  \printnames{author}%
+  \setunit{\addcomma\space}
+  \newblock%
+  \printfield{title}%
+  \par%
+  \newblock%
+  {%
+    \fontsize{8pt}{1em}\bodyfontlight\color{graytext}%
+    \usebibmacro{journal+issuetitle}%
+    \setunit{\space}%
+    \printfield{pages}%
+    \newunit%
+    \printlist{publisher}%
+    \setunit*{\addcomma\space}%
+    \printfield{year}%
+    \newunit%
+  }
+  \par\vspace{0.3\baselineskip}
+}
+
+\DeclareBibliographyDriver{inproceedings}{%
+  \fontsize{9pt}{1em}\bodyfont%
+  \printnames{author}%
+  \setunit{\addcomma\space}
+  \newblock%
+  \printfield{title}%
+  \par%
+  \newblock%
+  {%
+    \fontsize{8pt}{1em}\bodyfontlight\color{graytext}%
+    \printfield{booktitle}%
+    \setunit{\addcomma\space}%
+    \printfield{year}%
 %    \setunit{\addcomma\space}%
 %    \printlist{location}%
 %    \newunit%
-%  }
-%  \par\vspace{0.3\baselineskip}
-%}
-%
+  }
+  \par\vspace{0.3\baselineskip}
+}
+
 %\DeclareBibliographyDriver{incollection}{%
 %  \fontsize{9pt}{1em}\bodyfont%
 %  \printfield{title}%
@@ -797,6 +799,7 @@
 %  \par\vspace{0.3\baselineskip}
 %}
 %
+
 %\DeclareBibliographyDriver{misc}{%
 %  \fontsize{9pt}{1em}\bodyfont%
 %  \printfield{title}%
@@ -817,17 +820,76 @@
 %  }
 %  \par\vspace{0.3\baselineskip}
 %}
-%
-%\DeclareBibliographyDriver{phdthesis}{%
+
+
+\DeclareBibliographyDriver{book}{%
+  \fontsize{9pt}{1em}\bodyfont%
+  \printnames{author}%
+  \setunit{\addcomma\space}
+  \newblock%
+  \printfield{title}%
+  \par%
+  \newblock%
+  {%
+    \fontsize{8pt}{1em}\bodyfontlight\color{graytext}%
+    \setunit{\space}%
+    \printlist{publisher}%
+    \newunit%
+    \printfield{year}%
+    \setunit*{\addcomma\space}%
+    \printfield{isbn}%
+    \newunit%
+  }
+  \par\vspace{0.3\baselineskip}
+}
+
+
+
+\DeclareBibliographyDriver{thesis}{%
+%  \usebibmacro{bibindex}%
+%  \usebibmacro{begentry}%
+  \fontsize{9pt}{1em}\bodyfont%
+  \printnames{author}%
+  \setunit{\labelnamepunct}
+  \printfield{title}%Added by Marco
+  \setunit{\labelnamepunct}
+%  \newunit\newblock
+  \printfield{type}%
+  \newblock
+  \par
+  \newblock
+  {
+     \fontsize{8pt}{1em}\bodyfontlight\color{graytext}
+     \usebibmacro{institution+location+date}%
+     \newunit
+  }
+}
+
+
+%\DeclareBibliographyDriver{thesis}{%
 %  \fontsize{9pt}{1em}\bodyfont%
-%  \printfield{title}%
-%  \newblock%
 %  \printnames{author}%
+%  \setunit{\space}
+%  (\printfield{year})%
+%  \setunit{\addcomma\space}%
+%  \newblock%
+%  \printfield{title}%
 %  \par%
 %  \newblock%
+%  {%
+%    \fontsize{8pt}{1em}\bodyfontlight\color{graytext}%
+%    \printfield{type}
+%    \printfield{institution}%
+%    \setunit{\addcomma\space}%
+%    \printfield{year}%
+%    \setunit{\addcomma\space}%
+%    \printlist{location}%
+%    \newunit%
+%  }
+% 
 %  \par\vspace{0.3\baselineskip}
 %}
-%
+
 %
 %
 %\DeclareBibliographyDriver{report}{%
